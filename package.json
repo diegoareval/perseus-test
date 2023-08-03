@@ -2,17 +2,18 @@
   "name": "perseus-test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/exercise.ts",
   "scripts": {
     "start": "node dist/exercise.js",
     "start:dev": "ts-node src/exercise.ts",
+    "test": "npx jest",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
     "lint:fix": "npm run lint -- --fix"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Diego Arevalo <diego2000avelar@gmail.com>",
+  "license": "MISC",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
