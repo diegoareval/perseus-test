@@ -26,12 +26,8 @@ $ npm run lint:fix
 ```
 
 
-## Stay in touch
-
-- Author - [Diego Arevalo - Linkdn](https://www.linkedin.com/in/diego2000avelar/)
-- Author - [Diego Arevalo - Github](https://github.com/diegoareval)
-
-
+## Exercise Source
+Exercise - [Go-to-Exercise](https://gist.github.com/rrborg/5451127a7ae5cde6935b279ea509d2d8)
 ## Documentation
 [Typescript](https://www.typescriptlang.org/)
 
@@ -44,4 +40,9 @@ $ npm run lint:fix
 [Design Patterns - Singleton](https://refactoring.guru/design-patterns/singleton)
 
 [Design Patterns - Factory](https://refactoring.guru/design-patterns/factory-method)
+[Design Patterns - Facade](https://refactoring.guru/design-patterns/facade)
 
+## Stay in touch
+
+- Author - [Diego Arevalo - Linkdn](https://www.linkedin.com/in/diego2000avelar/)
+- Author - [Diego Arevalo - Github](https://github.com/diegoareval)

@@ -1,77 +1,88 @@
-import { donnyObj, mattObj, miroslavObj, rockyObj } from './constants';
-import { IMember } from './interfaces';
+import {
+  donnyObj,
+  mattObj,
+  miroslavObj,
+  rockyObj,
+  diegoObj,
+} from './constants';
+import { IMember, ITeamMemberFacade } from './interfaces';
+import { TeamMember } from './team-member';
 
-class TeamMembers {
-  private static instance: TeamMembers;
-  private members: IMember[];
+class TeamMemberFacade implements ITeamMemberFacade {
+  private teamInstance: TeamMember;
 
-  private constructor() {
-    this.members = [];
+  constructor() {
+    this.teamInstance = TeamMember.getInstance();
+    this.addInitialMembers();
+    this.updateDates();
   }
 
-  public static getInstance(): TeamMembers {
-    if (!TeamMembers.instance) {
-      TeamMembers.instance = new TeamMembers();
+  private addInitialMembers() {
+    [rockyObj, miroslavObj, donnyObj, mattObj, diegoObj].forEach((member) => {
+      this.teamInstance.addMember(member);
+    });
+  }
+
+  private updateDates() {
+    this.teamInstance.getAllMembers().forEach((member) => {
+      member.Date = new Date().toLocaleDateString();
+    });
+  }
+
+  public showActiveRecords() {
+    console.log('--- Active Records ---');
+    const activeMembers = this.teamInstance
+      .getAllMembers()
+      .filter((member) => member.Status === 'Active');
+    if (activeMembers.length > 0) {
+      activeMembers.forEach((member) => {
+        console.log(
+          `Name: ${member.Name}, Date: ${member.Date}, Favorite Movie: ${member.FavoriteMovie}`,
+        );
+      });
+    } else {
+      console.log('No active records found.');
     }
-    return TeamMembers.instance;
   }
 
-  public addMember(member: IMember) {
-    this.members.push(member);
-  }
+  public sortAndDisplayByProperty(property: keyof IMember) {
+    const allMembers = this.teamInstance.getAllMembers();
 
-  public getAllMembers(): IMember[] {
-    return this.members;
-  }
-}
-
-function addCurrentDateToObject(obj: IMember) {
-  obj.Date = new Date().toLocaleDateString();
-}
-
-function displayActiveRecords(arr: IMember[]) {
-  const activeRecords = arr.filter((member) => member.Status === 'Active');
-  if (activeRecords.length > 0) {
-    activeRecords.forEach((member) =>
-      console.log(
-        `Name: ${member.Name}, Date: ${member.Date}, Favorite Movie: ${member.FavoriteMovie}`,
-      ),
+    const sortedMembers = [...allMembers].sort((a, b) =>
+      this.compareMembersByProperty(a, b, property),
     );
-  } else {
-    console.log('No active records found.');
-  }
-}
 
-function sortOutputByProperty(arr: IMember[], property: keyof IMember) {
-  arr.sort((a, b) => {
+    console.log(`--- Sorted Output by ${property} ---`);
+    sortedMembers.forEach((member) => {
+      console.log(`${property}: ${member[property]}`);
+    });
+  }
+
+  private compareMembersByProperty(
+    a: IMember,
+    b: IMember,
+    property: keyof IMember,
+  ): number {
     const aValue = a[property];
     const bValue = b[property];
-    if (aValue && bValue) {
-      return aValue.localeCompare(bValue);
-    } else if (aValue && !bValue) {
-      return -1;
-    } else if (!aValue && bValue) {
+
+    if (aValue === bValue) {
+      return 0;
+    }
+    if (!aValue) {
       return 1;
     }
-    return 0;
-  });
+    if (!bValue) {
+      return -1;
+    }
 
-  console.log(`Sorted result by ${property}:`);
-  arr.forEach((item) => {
-    console.log(`${property}: ${item[property]}`);
-  });
+    return aValue.localeCompare(bValue);
+  }
 }
 
-const teamMembersInstance = TeamMembers.getInstance();
-teamMembersInstance.addMember(rockyObj);
-teamMembersInstance.addMember(miroslavObj);
-teamMembersInstance.addMember(donnyObj);
-teamMembersInstance.addMember(mattObj);
-
-teamMembersInstance.getAllMembers().forEach(addCurrentDateToObject);
-
-console.log('--- Active Records ---');
-displayActiveRecords(teamMembersInstance.getAllMembers());
-
-console.log('--- Sorted Output ---');
-sortOutputByProperty(teamMembersInstance.getAllMembers(), 'Name');
+// Show results
+const teamFacade = new TeamMemberFacade();
+teamFacade.showActiveRecords();
+teamFacade.sortAndDisplayByProperty('Name');
+teamFacade.sortAndDisplayByProperty('FavoriteFood');
+teamFacade.sortAndDisplayByProperty('FavoriteMovie');

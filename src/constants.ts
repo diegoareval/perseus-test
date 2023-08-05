@@ -25,3 +25,11 @@ export const mattObj = {
   FavoriteMovie: 'The Princess Bride',
   Status: 'Active',
 };
+
+// my object
+export const diegoObj = {
+  Name: 'Diego',
+  FavoriteFood: 'Pizza',
+  FavoriteMovie: 'John Wick',
+  Status: 'Active',
+};
