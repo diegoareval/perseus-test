@@ -34,9 +34,11 @@ class TeamMemberFacade implements ITeamMemberFacade {
    * @private
    */
   private addInitialMembers() {
-    [rockyObj, miroslavObj, donnyObj, mattObj, diegoObj].forEach((member) => {
-      this.teamInstance.addMember(member);
-    });
+    [rockyObj, miroslavObj, donnyObj, mattObj, diegoObj].forEach(
+      (member: IMember) => {
+        this.teamInstance.addMember(member);
+      },
+    );
   }
 
   /**
@@ -73,7 +75,7 @@ class TeamMemberFacade implements ITeamMemberFacade {
    * @param {keyof IMember} property - The property to sort by.
    */
   public sortAndDisplayByProperty(property: keyof IMember) {
-    const allMembers = this.teamInstance.getAllMembers();
+    const allMembers: IMember[] = this.teamInstance.getAllMembers();
 
     const sortedMembers = [...allMembers].sort((a, b) =>
       this.compareMembersByProperty(a, b, property),
